@@ -30,3 +30,10 @@ p {
 h3 {
   margin: 0px;
 }
+textarea {
+  padding: 0;
+  border: 0;
+}
+textarea:focus-visible {
+  outline: none;
+}
