@@ -17,18 +17,22 @@
 
 .frame {
   &-main {
-    width: 80vh;
+    width: 80vw;
   }
   &-content {
     @include column(auto, auto, 0px);
+  }
+  &-textarea {
+    width: 100%;
+    overflow: hidden;
   }
 }
 
 .title {
   @include txt-bold;
-  @include txt-21;
-  line-height: 27px;
-  color: $col-bgd-2;
+  font-size: 50px;
+  line-height: 75px;
+  color: $col-bgd-1;
 }
 
 .content {
