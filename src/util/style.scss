@@ -1,9 +1,8 @@
 @import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
 @import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
-@import url(https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&display=swap);
 @import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css);
 @import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
-
+@import url("https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&display=swap");
 // $col-txt-1: #7b8692;
 * {
   font-size: 16px;
@@ -19,8 +18,8 @@ $col-txt-g5: #808080;
 $col-txt-g6: #999999;
 $col-txt-g7: #b3b3b3;
 $col-txt-g8: #cccccc;
-$col-txt-g9: #e6e6e6;
-$col-txt-g95: #f2f2f2;
+$col-txt-g9: #eeeeee;
+$col-txt-g95: #f4f4f4;
 $col-txt-w: #ffffff;
 $col-txt-1: #b74bdd;
 $col-txt-2: #7c4dff;
@@ -35,8 +34,8 @@ $col-bgd-g5: #808080;
 $col-bgd-g6: #999999;
 $col-bgd-g7: #b3b3b3;
 $col-bgd-g8: #cccccc;
-$col-bgd-g9: #e6e6e6;
-$col-bgd-g95: #f2f2f2;
+$col-bgd-g9: #eeeeee;
+$col-bgd-g95: #f4f4f4;
 $col-bgd-w: #ffffff;
 $col-bgd-1: #4e86ff;
 $col-bgd-1-hover: #a726a2;
@@ -173,15 +172,28 @@ $font-xl: 1.25rem;
   margin: 0px;
 }
 
-@mixin txt-regular {
-  font-family: "NanumMyeongjo", serif;
+@mixin txt-bold-serif {
+  font-family: "Noto Serif KR", "serif";
+  font-weight: bold;
+  margin: 0px;
+}
+
+@mixin txt-medium-serif {
+  font-family: "Noto Serif KR", "serif";
   font-style: normal;
-  font-weight: 400;
+  font-weight: regular;
+  margin: 0px;
+}
+
+@mixin txt-regular {
+  font-family: "Spoqa Han Sans Neo", "Noto Sans KR", "sans-serif";
+  font-style: normal;
+  font-weight: regular;
   margin: 0px;
 }
 
 @mixin txt-light {
-  font-family: "NanumSquare", sans-serif !important;
+  font-family: "Spoqa Han Sans Neo", "Noto Sans KR", "sans-serif";
   font-style: normal;
   font-weight: 300;
   margin: 0px;
@@ -290,7 +302,7 @@ $font-xl: 1.25rem;
 @mixin columnWithBorder($w, $h, $gap, $col-border) {
   @include column($w, $h, 0px);
   > * {
-    border-top: 1px solid $col-border;
+    border-top: 1.5px solid $col-border;
     padding-top: ($gap / 2);
     padding-bottom: ($gap / 2);
   }

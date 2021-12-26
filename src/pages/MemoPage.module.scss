@@ -5,8 +5,13 @@
 //   color: $col-bgd-2;
 // }
 
+$gap: 20vw;
+
 .wrapper {
+  max-width: 1024px;
+  padding-left: calc(50vw - 512px);
   @include row(auto, auto, 0px);
+  align-items: flex-start;
   justify-content: space-between;
 
   > * {
@@ -19,14 +24,67 @@
   &-main {
     width: 80vw;
     padding-top: 10vw;
+    @include column(100%, auto, 25px);
+    &-button {
+      @include column(100%, auto, 10px);
+    }
   }
   &-content {
-    @include column(auto, auto, 0px);
+    @include columnWithBorder(auto, auto, 50px, $col-bgd-g9);
+    align-items: flex-start;
+    padding-bottom: 50vh;
+  }
+  &-textbox {
+    width: 100%;
   }
   &-textarea {
     width: 100%;
     overflow: hidden;
   }
+  &-left {
+    position: relative;
+    width: 10vw;
+  }
+  &-right {
+    position: relative;
+    width: 10vw;
+    // padding-top: 10vw;
+  }
+}
+
+.button {
+  margin-top: 25px;
+  animation-duration: 1s;
+  animation-name: fade-in;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.info-bar-emph {
+  position: absolute;
+  left: #{"min(7vw, calc(1024px * 0.07))"};
+  top: 0px;
+  background-color: $col-bgd-1;
+  width: 3px;
+  height: 0px;
+  transition: all 0.5s;
+}
+
+.action-area-emph {
+  position: absolute;
+  top: 0px;
+  width: 100%;
+  height: 100px;
+  background-color: $col-bgd-w;
+  transition: all 0.5s;
 }
 
 .title {
@@ -34,7 +92,15 @@
   font-size: 50px;
   line-height: 50px;
   color: $col-bgd-1;
-  padding-bottom: 50px;
+  text-align: left;
+}
+
+.title-serif {
+  @include txt-medium-serif;
+  font-size: 50px;
+  line-height: 50px;
+  color: $col-bgd-1;
+  text-align: left;
 }
 
 .content {
@@ -42,7 +108,105 @@
   @include txt-19;
   line-height: 29px;
   width: 100%;
-  height: 50px;
+  height: 20px;
   overflow: hidden;
   text-align: left;
+}
+
+.content-serif {
+  @include txt-medium-serif;
+  @include txt-19;
+  line-height: 29px;
+  width: 100%;
+  height: 20px;
+  overflow: hidden;
+  text-align: left;
+}
+
+@media (max-width: 480px) {
+  .wrapper {
+    @include row(auto, auto, 0px);
+    align-items: flex-start;
+    justify-content: space-between;
+
+    > * {
+      @include txt-medium;
+      @include txt-11;
+    }
+  }
+
+  .frame {
+    &-main {
+      width: 90vw;
+      @include column(100%, auto, 25px);
+      padding-top: 25vw;
+      &-button {
+        @include column(100%, auto, 10px);
+      }
+    }
+    &-content {
+      @include column(auto, auto, 0px);
+      align-items: flex-start;
+    }
+    &-textbox {
+      width: 100%;
+    }
+    &-textarea {
+      width: 100%;
+      overflow: hidden;
+      margin-top: 0px;
+    }
+    &-left {
+      position: relative;
+      width: 5vw;
+    }
+    &-right {
+      position: relative;
+      width: 5vw;
+      // padding-top: 10vw;
+    }
+  }
+  .title {
+    @include txt-bold;
+    font-size: 30px;
+    line-height: 30px;
+    color: $col-bgd-1;
+    text-align: left;
+  }
+
+  .title-serif {
+    @include txt-bold;
+    font-size: 30px;
+    line-height: 30px;
+    color: $col-bgd-1;
+    text-align: left;
+  }
+
+  .content {
+    @include txt-medium;
+    @include txt-11;
+    font-size: 16px;
+    line-height: 24px;
+    width: 100%;
+    height: 20px;
+    overflow: hidden;
+    text-align: left;
+  }
+
+  .content-serif {
+    @include txt-regular;
+    @include txt-11;
+    font-size: 16px;
+    line-height: 24px;
+    width: 100%;
+    height: 20px;
+    overflow: hidden;
+    text-align: left;
+  }
+
+  .info-bar-emph {
+    border-radius: 5px;
+    width: 2.5px;
+    left: 3px;
+  }
 }

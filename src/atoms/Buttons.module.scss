@@ -1,0 +1,42 @@
+@import "../util/style.scss";
+
+.wrapper {
+  @include row(auto, auto, 20px);
+  row-gap: 2px;
+  flex-wrap: wrap;
+}
+
+.text {
+  // max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  padding: 5px;
+  border-radius: 7px;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  @include txt-medium;
+  color: $col-bgd-g5;
+  &:hover {
+    color: $col-bgd-1;
+    background-color: $col-bgd-g9;
+  }
+  transition: all 0.3s;
+}
+
+@media (max-width: 480px) {
+  .wrapper {
+    @include row(auto, auto, 6px);
+  }
+
+  .text {
+    @include txt-medium;
+    padding: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 14px;
+    line-height: 14px;
+    border-radius: 7px;
+    background-color: $col-bgd-g95;
+  }
+}
