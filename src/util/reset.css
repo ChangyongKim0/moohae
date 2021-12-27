@@ -40,3 +40,6 @@ textarea:focus-visible {
 textarea:focus {
   outline: none;
 }
+div:focus {
+  outline: none;
+}

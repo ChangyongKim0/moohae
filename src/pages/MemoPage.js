@@ -45,7 +45,7 @@ const MemoPage = () => {
     adjustTextareaHeight();
     updateDataToDB(id);
     highlightArea(id);
-    if (document.getElementById(id).value === "") {
+    if (document.getElementById(id).innerText === "") {
       setDataIsEmpty(true);
     } else {
       setDataIsEmpty(false);
@@ -58,7 +58,7 @@ const MemoPage = () => {
     setFocusId(id);
     adjustTextareaHeight();
     highlightArea(id);
-    if (document.getElementById(id).value === "") {
+    if (document.getElementById(id).innerText === "") {
       setDataIsEmpty(true);
     } else {
       setDataIsEmpty(false);
@@ -66,7 +66,7 @@ const MemoPage = () => {
   };
 
   const adjustTextareaHeight = () => {
-    let elements = Array.from(document.getElementsByTagName("textarea"));
+    let elements = Array.from(document.getElementsByClassName("content"));
     let div_elements = Array.from(
       document.getElementsByClassName("div-textarea")
     );
@@ -83,11 +83,11 @@ const MemoPage = () => {
   };
 
   const arrageMemoList = () => {
-    let elements = Array.from(document.getElementsByTagName("textarea"));
+    let elements = Array.from(document.getElementsByClassName("content"));
     // console.log(div_elements);
     // let length = elements.length;
     elements.forEach((element, idx) => {
-      if (element.value === "" && idx < elements.length - 1) {
+      if (element.innerText === "" && idx < elements.length - 1) {
         // console.log(idx);
         handleData({
           type: "remove",
@@ -95,16 +95,16 @@ const MemoPage = () => {
         });
       }
     });
-    if (elements.slice(-1)[0].value !== "") {
+    if (elements.slice(-1)[0].innerText !== "") {
       handleData({ type: "add", data: "메모를 추가해요." });
     }
   };
 
   const updateDataToDB = (id) => {
     const text =
-      Array.from(document.getElementsByTagName("textarea")).filter(
+      Array.from(document.getElementsByClassName("content")).filter(
         (e) => e.id === id
-      )[0]?.value || "";
+      )[0]?.innerText || "";
     console.log(id);
     console.log(text);
     if (text.length === 0) {
@@ -187,7 +187,7 @@ const MemoPage = () => {
     adjustTextareaHeight(0);
     highlightArea(0);
 
-    // document.getElementsByTagName("textarea")[0].value = <span>fff</span>;
+    // document.getElementsById("content")[0].value = <span>fff</span>;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -205,7 +205,7 @@ const MemoPage = () => {
 
   useEffect(() => {
     if (data_loaded) {
-      const elements = Array.from(document.getElementsByTagName("textarea"));
+      const elements = Array.from(document.getElementsByClassName("content"));
       Promise.all(
         elements.map((e) => {
           return db
@@ -216,7 +216,7 @@ const MemoPage = () => {
       ).then((docs) => {
         docs.forEach((doc, idx) => {
           if (doc.exists) {
-            elements[idx].value = doc.data().content;
+            elements[idx].innerText = doc.data().content;
           }
         });
         arrageMemoList();
@@ -237,7 +237,7 @@ const MemoPage = () => {
     });
     setTimeout(
       () =>
-        Array.from(document.getElementsByTagName("textarea"))[idx + 1].focus(),
+        Array.from(document.getElementsByClassName("content"))[idx + 1].focus(),
       100
     );
   };
@@ -286,15 +286,16 @@ const MemoPage = () => {
                   id={"div-textarea-" + e.id}
                   className={cx("frame-textarea") + " div-textarea"}
                 >
-                  <textarea
+                  <div
+                    contentEditable
                     key={e.id}
                     id={e.id}
-                    className={cx("content")}
+                    className={cx("content") + " content"}
                     placeholder={e.placeholder}
                     spellCheck={false}
                     onKeyUp={() => onKeyUpTextArea(e.id)}
                     onFocus={() => onFocusTextArea(e.id)}
-                  ></textarea>
+                  ></div>
                 </div>
                 {focus_id === e.id && !data_is_empty ? (
                   <div className={cx("button")}>
@@ -304,6 +305,7 @@ const MemoPage = () => {
                         "아래에 추가.",
                         "상위 메모.",
                         "메모 안으로.",
+                        "$a$",
                       ]}
                       onClicks={[() => {}, () => insertTextareaBelow(idx)]}
                     />

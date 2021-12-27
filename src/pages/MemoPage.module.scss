@@ -20,6 +20,12 @@ $gap: 20vw;
   }
 }
 
+[contenteditable="true"]:empty::before {
+  content: attr(placeholder);
+  display: block;
+  color: $col-bgd-g6;
+}
+
 .frame {
   &-main {
     width: 80vw;
