@@ -1,0 +1,32 @@
+@import "../util/style.scss";
+
+.wrapper {
+  overflow: hidden;
+}
+
+.frame {
+  width: 100vw;
+  height: 100vh;
+  @include column(none, none, 0);
+  position: absolute;
+  color: $col-bgd-w;
+  background-color: $col-bgd-b;
+  animation: fade-out 5s;
+  justify-content: center;
+  > * {
+    @include txt-bold;
+    font-size: 60px;
+    line-height: 70px;
+  }
+  opacity: 0;
+  pointer-events: none;
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
