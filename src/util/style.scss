@@ -3,6 +3,7 @@
 @import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css);
 @import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
 @import url("https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap");
 // $col-txt-1: #7b8692;
 * {
   font-size: 16px;
@@ -38,6 +39,7 @@ $col-bgd-g9: #eeeeee;
 $col-bgd-g95: #f4f4f4;
 $col-bgd-w: #ffffff;
 $col-bgd-1: #4e86ff;
+$col-bgd-1-highlight: #3e7bff;
 $col-bgd-1-hover: #a726a2;
 $col-bgd-1-pressed: #850180;
 $col-bgd-2: #7c4dff;
@@ -185,6 +187,13 @@ $font-xl: 1.25rem;
   margin: 0px;
 }
 
+@mixin txt-mono {
+  font-family: "Roboto Mono", "Courier New", Courier, monospace;
+  font-style: normal;
+  font-weight: 400;
+  margin: 0px;
+}
+
 @mixin txt-regular {
   font-family: "Spoqa Han Sans Neo", "Noto Sans KR", "sans-serif";
   font-style: normal;
@@ -314,4 +323,8 @@ $font-xl: 1.25rem;
 
 .map {
   height: auto;
+}
+
+.emph {
+  color: $col-bgd-1;
 }

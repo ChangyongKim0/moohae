@@ -43,3 +43,12 @@ textarea:focus {
 div:focus {
   outline: none;
 }
+b {
+  font-size: auto;
+}
+.MJXc-display {
+  margin: 0 !important;
+}
+.MathJax_Preview {
+  display: none;
+}
