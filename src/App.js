@@ -6,6 +6,7 @@ import HomePage from "./pages/HomePage";
 import MathEqPage from "./pages/MathEqPage";
 import MarkDownPage from "./pages/MarkDownPage";
 import ThreeJsPage from "./pages/ThreeJsPage";
+import ThreeJsTorusPage from "./pages/ThreeJsTorusPage";
 import "./App.css";
 
 function App() {
@@ -15,7 +16,8 @@ function App() {
       <Route path="/memo" element={<MemoPage />} />
       <Route path="/math-eq" element={<MathEqPage />} />
       <Route path="/markdown" element={<MarkDownPage />} />
-      <Route path="/three-js" element={<ThreeJsPage />} />
+      <Route exact path="/three-js" element={<ThreeJsPage />} />
+      <Route path="/three-js/torus" element={<ThreeJsTorusPage />} />
     </Routes>
   );
 }

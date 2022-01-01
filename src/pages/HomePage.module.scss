@@ -11,6 +11,7 @@ $size-2: #{"min(2vw, 10px)"};
   @include column(auto, auto, 100px);
   justify-content: center;
   //   background-color: $col-bgd-1;
+  animation: fade-in-only 0.5s;
 }
 
 .button {
