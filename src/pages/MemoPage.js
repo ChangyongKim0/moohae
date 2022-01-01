@@ -1,6 +1,7 @@
 import React, { useEffect, useReducer, useState } from "react";
 import classNames from "classnames/bind";
 import "../util/reset.css";
+import "../util/style.scss";
 import styles from "./MemoPage.module.scss";
 import Buttons from "../atoms/Buttons";
 import { db } from "../index";
@@ -40,17 +41,95 @@ const reduceData = (state, action) => {
 const MemoPage = () => {
   const [focus_id, setFocusId] = useState(0);
 
-  const onKeyUpTextArea = (id) => {
+  const onKeyUpTextArea = (event, id) => {
     arrageMemoList();
     adjustTextareaHeight();
     updateDataToDB(id);
     highlightArea(id);
-    if (document.getElementById(id).innerText === "") {
-      setDataIsEmpty(true);
+    formatText(event, id);
+    if (
+      document
+        .getElementById(id)
+        .innerText.replace(" ", "")
+        .replace("\n", "") === ""
+    ) {
+      document.getElementById(id).innerHTML = null;
+      // setDataIsEmpty(true);
     } else {
       setDataIsEmpty(false);
     }
   };
+
+  const formatText = (event, id, cursor_set = true) => {
+    // console.log(event);
+    if (
+      event.key === "Control"
+      // event.key.length != 1 &&
+      // event.key !== "Shift"
+    ) {
+      const element = document.getElementById(id);
+      const sel = window.getSelection();
+      const [start_node, end_node, start, end] = [
+        sel.anchorNode,
+        sel.focusNode,
+        sel.anchorOffset,
+        sel.focusOffset,
+      ];
+      // console.log(element.innerHTML);
+      // element.innerHTML = element.innerHTML
+      //   .replace(/<div>/g, "")
+      //   .replace(/<\/div>/g, "")
+      //   .replace(/<[^b/p](.*?\n*?)*?>/g, "<p>")
+      //   .replace(/<\/[^bp](.*?\n*?)*?>/g, "</p>");
+      element.innerHTML = element.innerHTML
+        .replaceAll("\n", "\\enter")
+        .replace(/<b>/g, "\\emph-start")
+        .replace(/<\/b>/g, "\\emph-end")
+        .replace(/<b class="emph">/g, "\\emph-start")
+        .replace(/<div><br><\/div>/g, "\\enter")
+        .replace(/<div>/g, "\\enter")
+        .replace(/<br>/g, "\\enter")
+        .replace(/<(.*?\n*?)*?>/g, "")
+        .replace(/\\enter/g, "<br>")
+        .replaceAll("\\emph-start", '<b class="emph">')
+        .replaceAll("\\emph-end", "</b>");
+      if (cursor_set) {
+        // console.log(element, start_node, end_node, start, end);
+        let range = document.createRange();
+        let matched = false;
+        element.childNodes.forEach((e, idx) => {
+          if (e?.textContent == end_node?.textContent && !matched) {
+            // console.log("MATCHED");
+            matched = true;
+            try {
+              range.setStart(element.childNodes[idx], end);
+            } catch {
+              range.setStart(element.childNodes[idx], 0);
+            }
+          }
+          if (!matched) {
+            e.childNodes?.forEach((e, idx) => {
+              if (e?.textContent == end_node?.textContent && !matched) {
+                // console.log("MATCHED");
+                matched = true;
+                try {
+                  range.setStart(element.childNodes[idx], end);
+                } catch {
+                  range.setStart(element.childNodes[idx], 0);
+                }
+              }
+            });
+          }
+        });
+        range.collapse(true);
+        // console.log(range);
+        sel.removeAllRanges();
+        sel.addRange(range);
+      }
+    }
+  };
+
+  const remainCaretSelectionRange = (element, sel, start, end) => {};
 
   const [data_is_empty, setDataIsEmpty] = useState(true);
 
@@ -58,11 +137,21 @@ const MemoPage = () => {
     setFocusId(id);
     adjustTextareaHeight();
     highlightArea(id);
-    if (document.getElementById(id).innerText === "") {
+    if (
+      document
+        .getElementById(id)
+        .innerText.replace(" ", "")
+        .replace("\n", "") === ""
+    ) {
+      document.getElementById(id).innerHTML = null;
       setDataIsEmpty(true);
     } else {
       setDataIsEmpty(false);
     }
+  };
+
+  const onBlurTextArea = (id) => {
+    formatText({ key: "Control" }, id, false);
   };
 
   const adjustTextareaHeight = () => {
@@ -87,8 +176,13 @@ const MemoPage = () => {
     // console.log(div_elements);
     // let length = elements.length;
     elements.forEach((element, idx) => {
-      if (element.innerText === "" && idx < elements.length - 1) {
-        // console.log(idx);
+      if (
+        (element.innerText === "" ||
+          element.innerText === " " ||
+          element.innerText === "\n") &&
+        idx < elements.length - 1
+      ) {
+        console.log(idx);
         handleData({
           type: "remove",
           position: idx === elements.length - 2 ? idx + 1 : idx,
@@ -104,10 +198,10 @@ const MemoPage = () => {
     const text =
       Array.from(document.getElementsByClassName("content")).filter(
         (e) => e.id === id
-      )[0]?.innerText || "";
-    console.log(id);
-    console.log(text);
-    if (text.length === 0) {
+      )[0]?.innerHTML || "";
+    // console.log(id);
+    // console.log(text);
+    if (text.length === 0 || text == "<br>") {
       db.collection("memo")
         .doc("content-" + id)
         .delete();
@@ -126,7 +220,7 @@ const MemoPage = () => {
                 content: text,
               });
           } else {
-            console.log(id);
+            // console.log(id);
             db.collection("memo")
               .doc("content-" + id)
               .update({ time_modified: Date.now(), content: text });
@@ -177,7 +271,7 @@ const MemoPage = () => {
             console.log(doc.id);
             handleData({
               type: "add",
-              data: "  ",
+              data: "메모를 추가해요.",
               id: doc.id.split("-")[1],
             });
           }
@@ -216,10 +310,18 @@ const MemoPage = () => {
       ).then((docs) => {
         docs.forEach((doc, idx) => {
           if (doc.exists) {
-            elements[idx].innerText = doc.data().content;
+            elements[idx].innerHTML = doc.data().content;
+            setTimeout(
+              () =>
+                data.map((e) =>
+                  formatText({ key: "Control" }, elements[idx].id)
+                ),
+              0
+            );
           }
         });
         arrageMemoList();
+
         adjustTextareaHeight();
 
         highlightArea(elements.slice(-1)[0].id);
@@ -293,8 +395,9 @@ const MemoPage = () => {
                     className={cx("content") + " content"}
                     placeholder={e.placeholder}
                     spellCheck={false}
-                    onKeyUp={() => onKeyUpTextArea(e.id)}
+                    onKeyUp={(event) => onKeyUpTextArea(event, e.id)}
                     onFocus={() => onFocusTextArea(e.id)}
+                    onBlur={() => onBlurTextArea(e.id)}
                   ></div>
                 </div>
                 {focus_id === e.id && !data_is_empty ? (
