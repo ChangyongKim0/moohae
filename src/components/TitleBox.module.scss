@@ -1,0 +1,71 @@
+@import "../util/style.scss";
+
+.wrapper {
+  cursor: pointer;
+  @include row(auto, auto, 20px);
+  width: 100%;
+  max-width: calc(0.8 * 480px);
+  padding: 10px;
+  border-radius: 10px;
+  &:hover {
+    background-color: $col-bgd-g9;
+  }
+  transition: all;
+  transition-duration: 0.3s;
+}
+
+.frame {
+  &-content {
+    width: calc(100% - 70px);
+    @include column(100%, auto, 10px);
+    align-items: flex-start;
+    // overflow: hidden;
+    > * {
+      text-align: left;
+    }
+  }
+}
+
+.logo {
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px $col-bgd-g8;
+}
+
+.title {
+  @include txt-bold;
+  font-size: 24px;
+  line-height: 24px;
+  color: $col-bgd-1;
+  //   overflow-x: hidden;
+  //   overflow-y: visible;
+}
+
+.summary {
+  @include txt-medium;
+  font-size: 16px;
+  line-height: 16px;
+  color: $col-bgd-g2;
+  white-space: nowrap;
+  //   overflow-x: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 480px) {
+  .wrapper {
+    gap: 10px;
+    background-color: $col-bgd-g95;
+  }
+  .logo {
+    box-shadow: 0 0 15px $col-bgd-g9;
+  }
+  .title {
+    font-size: 21px;
+    line-height: 21px;
+  }
+  .summary {
+    font-size: 14px;
+    line-height: 14px;
+  }
+}

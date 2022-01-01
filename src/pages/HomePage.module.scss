@@ -1,0 +1,209 @@
+@import "../util/style.scss";
+
+$size-25: #{"min(25vw, 125px)"};
+$size-10: #{"min(10vw, 50px)"};
+$size-5: #{"min(5vw, 25px)"};
+$size-2: #{"min(2vw, 10px)"};
+
+.wrapper {
+  width: 100vw;
+  height: 100vh;
+  @include column(auto, auto, 100px);
+  justify-content: center;
+  //   background-color: $col-bgd-1;
+}
+
+.button {
+  @include txt-medium;
+  font-size: $size-5;
+  line-height: $size-5;
+  color: $col-bgd-g5;
+  padding: $size-2;
+  border-radius: 5px;
+  &:hover {
+    color: $col-bgd-1;
+    background-color: $col-bgd-g95;
+  }
+  transition: all;
+  transition-duration: 0.3s;
+}
+
+.frame {
+  &-logo {
+    @include row(auto, auto, 5vw);
+  }
+  &-button {
+    width: 60vw;
+    @include row(auto, auto, 10px);
+    // justify-content: space-between;
+    flex-wrap: wrap;
+    > * {
+      width: 100%;
+      @include column(auto, auto, 0px);
+    }
+  }
+}
+
+.logo {
+  &-xprnc {
+    width: $size-25;
+    height: $size-25;
+    // background-color: $col-bgd-g2;
+    animation: fade-in 2s;
+    border-radius: $size-5;
+    box-shadow: 0 0 $size-5 $col-bgd-g5;
+    opacity: 0.85;
+  }
+  &-times {
+    @include txt-bold;
+    font-size: $size-5;
+    color: $col-bgd-g4;
+    animation: fade-in-only 5s;
+  }
+  &-moohae {
+    width: $size-25;
+    height: $size-25;
+    background-color: $col-bgd-w;
+    animation: fade-in 3s;
+    border-radius: $size-5;
+    box-shadow: 0 0 $size-5 $col-bgd-g8;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    width: $size-10;
+    height: $size-10;
+    border-radius: $size-2;
+  }
+
+  to {
+    opacity: 0.85;
+    width: $size-25;
+    height: $size-25;
+    border-radius: $size-5;
+  }
+}
+
+@keyframes fade-in-only {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in-color {
+  from {
+    color: #e7e7e7;
+  }
+
+  10% {
+    color: $col-bgd-1;
+  }
+
+  20% {
+    color: #e7e7e7;
+  }
+
+  30% {
+    color: #ff4b4b;
+  }
+
+  40% {
+    color: #e7e7e7;
+  }
+
+  50% {
+    color: #6dbb55;
+  }
+  60% {
+    color: #e7e7e7;
+  }
+  70% {
+    color: #cd5ce4;
+  }
+  80% {
+    color: #e7e7e7;
+  }
+  90% {
+    color: #f5ca3c;
+  }
+
+  to {
+    color: #e7e7e7;
+  }
+}
+
+.title {
+  @include txt-bold;
+  font-size: 60px;
+  line-height: 60px;
+  color: #e7e7e7;
+  width: 100%;
+  max-width: calc(0.8 * 480px);
+  border-radius: 10px;
+  padding: 10px;
+  &:hover {
+    color: $col-bgd-1;
+    background-color: $col-bgd-g9;
+  }
+  transition-duration: 0.3s;
+  animation: fade-in-color 40s;
+}
+
+@media (max-width: 480px) {
+  .wrapper {
+    box-sizing: border-box;
+    width: 100vw;
+    height: auto;
+    @include column(auto, auto, calc(16.67vh - 18px));
+    padding-top: calc(50vh - 12.5vw);
+    justify-content: flex-start;
+    //   background-color: $col-bgd-1;
+    margin-bottom: 50vh;
+  }
+  .temp {
+    color: #ff3737;
+  }
+
+  .title {
+    @include txt-bold;
+    font-size: 36px;
+    line-height: 36px;
+    color: #e7e7e7;
+    &:hover {
+      color: $col-bgd-1;
+      background-color: $col-bgd-w;
+    }
+    //   transition-duration: 5s;
+    animation: fade-in-color 40s;
+  }
+
+  .button {
+    @include txt-medium;
+    font-size: 16px;
+    line-height: 16px;
+    color: $col-bgd-g5;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: $col-bgd-g95;
+    transition: all;
+    transition-duration: 0.3s;
+  }
+
+  .frame {
+    &-button {
+      width: 80vw;
+      @include row(auto, auto, 10px);
+      justify-content: space-between;
+      flex-wrap: wrap;
+      > * {
+        width: 100%;
+      }
+    }
+  }
+}
